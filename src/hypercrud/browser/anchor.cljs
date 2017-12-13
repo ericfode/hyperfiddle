@@ -77,7 +77,7 @@
        :tooltip (if-not (empty? errors)
                   [:warning (pprint-str errors)]
                   (case @(:display-mode ctx)
-                    :xray [nil (pr-str (dissoc route :code-database :link-id))]
+                    :xray [nil (pr-str (dissoc route :code-database :fiddle-id))]
                     :user (:tooltip user-props)))
        :class (->> [(:class user-props)
                     (if-not (empty? errors) "invalid")]

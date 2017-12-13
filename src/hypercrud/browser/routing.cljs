@@ -27,8 +27,8 @@
 
                          :else v))
                      route)
-      (update :link-id (let [uri (get-in ctx [:repository :dbhole/uri])]
-                         #(invert-id % uri)))))
+      (update :fiddle-id (let [uri (get-in ctx [:repository :dbhole/uri])]
+                           #(invert-id % uri)))))
 
 (defn ctx->id-lookup [uri ctx]
   ; todo tempid-lookups need to be indexed by db-ident not val
@@ -52,8 +52,8 @@
 
 (defn ^:export build-route' [link ctx]
   (mlet [fiddle-id (if-let [page (:link/fiddle link)]
-                   (either/right (:db/id page))
-                   (either/left {:message "link has no fiddle" :data {:link link}}))
+                     (either/right (:db/id page))
+                     (either/left {:message "link has no fiddle" :data {:link link}}))
          user-route-params (if (eval/validate-user-code-str (:link/formula link))
                              (mlet [user-fn (eval/eval-str' (:link/formula link))]
                                (if user-fn
@@ -78,7 +78,7 @@
                {
                 ;:code-database (:link/code-database link) todo when cross db references are working on links, don't need to inherit code-db-uri
                 :code-database (get-in ctx [:repository :dbhole/name])
-                :link-id fiddle-id})
+                :fiddle-id fiddle-id})
         ctx))))
 
 (defn encode
