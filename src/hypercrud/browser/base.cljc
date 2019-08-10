@@ -109,7 +109,7 @@
                                                              (query/append-inputs q '?hf-needle))))
 
                                (seq (::route/where route)) ((partial apply query/append-where-clauses) (::route/where route)))]
-                       (return (->QueryRequest q query-args {:limit browser-query-limit})))))
+                       (return (->QueryRequest q query-args {:limit (or (:fiddle/limit fiddle) browser-query-limit)})))))
 
     :entity
     (let [args (::route/datomic-args route)                 ; Missing entity param is valid state now https://github.com/hyperfiddle/hyperfiddle/issues/268
